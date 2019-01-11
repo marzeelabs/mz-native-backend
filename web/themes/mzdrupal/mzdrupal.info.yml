@@ -1,0 +1,59 @@
+# Drupal's .info.yml files allow themers to easily specify some of the static
+# properties of your theme. Properties such as its name, libraries of style
+# sheets and javascripts, and block regions.
+#
+# Drupal 8 stores a cache of the data in this .info.yml files. If you modify any
+# lines in this file, you MUST refresh Drupal 8's cache. You can do this with
+# the "drush cr" command or by simply visiting the Appearance page at
+# admin/appearance.
+
+
+
+# The name, description and screenshot used for this theme on the Appearance
+# page at admin/appearance.
+
+name: mzdrupal
+description: Custom theme for the website mzdrupal.
+screenshot: screenshot.png
+
+
+
+# This theme is compatible with Drupal 8 core. And it is a sub-theme of Zen.
+
+core: 8.x
+type: theme
+project: 'mzdrupal'
+version: '8.x-1.0'
+# Classy vs. Stable as a base theme: https://www.lullabot.com/articles/a-tale-of-two-base-themes-in-drupal-8-core
+# Zen uses classy as its base theme.
+base theme: classy
+
+
+
+# This section controls the libraries for your theme. For full documentation,
+# see https://www.drupal.org/node/2216195
+
+# The "libraries-override:" section will allow you to:
+# - Replace an entire library.
+# - Remove an entire library.
+# - Replace an asset in a library with another asset.
+# - Remove an asset from a library.
+libraries-override:
+  core/normalize: false
+  system/base:
+    css:
+      component:
+        css/components/clearfix.module.css: false
+
+# The "libraries-extend:" section will allow you to add your own JS or CSS to
+# existing libraries.
+# libraries-extend:
+
+# This section is used by the contrib module, Component Libraries. It allows you
+# to reference .twig files in your sass/ directory by using the Twig namespace:
+# @mzdrupal
+component-libraries:
+  mzdrupal:
+    paths:
+      - components
+      - templates

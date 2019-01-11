@@ -1,0 +1,69 @@
+// sass-lint:disable no-important
+
+// visually-hidden()
+//
+// Make an element visually hidden, but accessible to screen readers, etc.
+// @see https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+// @see https://www.nomensa.com/blog/2017/how-improve-web-accessibility-hiding-elements
+// @see https://hugogiraudel.com/2016/10/13/css-hide-and-seek/
+//
+// Style guide: sass.mixins.visually-hidden
+@mixin visually-hidden {
+  // An absolute positioning takes the element out of flow so it doesn’t affect
+  // the surrounding layout. It is also in the right place in the code, so
+  // visual use of a screen reader is not impacted.
+  position: absolute !important;
+  // Using a size of 1px by 1px ensures the element it still there and will be
+  // read out by screen readers.
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  // CSS Clipping technique allows you to hide elements visually and allow
+  // content to be read out to screen readers.
+  clip: rect(1px, 1px, 1px, 1px);
+  // The new specification recommends using clip-path to replace clip.
+  clip-path: inset(50%);
+  // This is in the original drupal code.
+  word-wrap: normal;
+  // width: 1px can have side effects on text rendering and therefore on its
+  // vocalisation by screen readers.
+  white-space: nowrap;
+  // A margin of -1px means that any text within the element is moved out of
+  // the 1px by 1px box.
+  margin: -1px;
+  // Setting padding and border to 0 prevents any problem that occurs due to
+  // the edges of the clipped area.
+  padding: 0;
+  border: 0;
+}
+
+// visually-hidden--off()
+//
+// Turns off the visually-hidden effect.
+//
+// Style guide: sass.mixins.visually-hidden--off
+@mixin visually-hidden--off {
+  position: static !important;
+  clip: auto;
+  clip-path: none;
+  height: auto;
+  width: auto;
+  overflow: visible;
+  margin: 0;
+  white-space: normal;
+}
+
+// visually-hidden--focusable()
+//
+// Makes an element visually hidden by default, but visible when receiving
+// focus.
+//
+// Style guide: sass.mixins.visually-hidden--focusable
+@mixin visually-hidden--focusable {
+  @include visually-hidden;
+
+  &:active,
+  &:focus {
+    @include visually-hidden--off;
+  }
+}

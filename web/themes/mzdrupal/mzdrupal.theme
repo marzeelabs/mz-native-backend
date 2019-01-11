@@ -1,0 +1,163 @@
+<?php
+/**
+ * @file
+ * Contains the theme's functions to manipulate Drupal's default markup.
+ *
+ * Complete documentation for this file is available online.
+ * @see https://drupal.org/node/1728096
+ */
+
+use \Drupal\Component\Utility\Html;
+use \Drupal\node\Entity\Node;
+
+/**
+ * Override or insert variables into the maintenance page template.
+ *
+ * @param array $variables
+ *   Variables to pass to the theme template.
+ * @param string $hook
+ *   The name of the template being rendered ("maintenance_page" in this case.)
+ */
+/* -- Delete this line if you want to use this function
+function mzdrupal_preprocess_maintenance_page(&$variables, $hook) {
+  // When a variable is manipulated or added in preprocess_html or
+  // preprocess_page, that same work is probably needed for the maintenance page
+  // as well, so we can just re-use those functions to do that work here.
+  mzdrupal_preprocess_html($variables, $hook);
+  mzdrupal_preprocess_page($variables, $hook);
+}
+// */
+
+/**
+ * Override or insert variables into the html templates.
+ *
+ * @param array $variables
+ *   Variables to pass to the theme template.
+ * @param string $hook
+ *   The name of the template being rendered ("html" in this case.)
+ */
+function mzdrupal_preprocess_html(&$variables, $hook) {
+
+  $xuacompatible = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'http-equiv' => 'x-ua-compatible',
+      'content' => 'ie=edge',
+    ],
+  ];
+
+  $variables['page']['#attached']['html_head'][] = [$xuacompatible, 'x-ua-compatible'];
+
+  if ($node = \Drupal::request()->attributes->get('node')) {
+    if ($node instanceof Node) {
+      $class = _mzdrupal_regions_prepare_class_string($node->getTitle());
+
+      $variables['attributes']['class'][] = 'page-node-' . $class;
+    }
+  }
+}
+
+function _mzdrupal_regions_prepare_class_string($string) {
+  $string = Html::cleanCSSIdentifier($string);
+  $string = Html::getClass($string);
+  while (strpos($string, '--') !== FALSE) {
+    $string = str_replace('--', '-', $string);
+  }
+
+  return $string;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function mzdrupal_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // $path_matcher = Drupal::service('path.matcher');
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node && $node instanceof Node) {
+    // Keep the most basic suggestion at the top (lowest precedence).
+
+    // Add the node type to theme suggestions.
+    array_splice($suggestions, 1, 0, 'page__node__' . $node->bundle());
+
+    // Add the node path alias to theme suggestions.
+    $path = $node->toUrl()->toString();
+    if (strpos($path, '/') === 0) {
+      $path = substr($path, 1);
+    }
+    $path = str_replace('-', '_', $path);
+    array_splice($suggestions, 2, 0, 'page__node__' . $path);
+
+    if (in_array('page__node__edit', $suggestions)) {
+      $suggestions[] = 'page__node__edit__' . $node->bundle();
+    }
+  }
+}
+
+/**
+ * Implements hook_pre_render_HOOK() for menu-local-tasks templates.
+ *
+ * Use preprocess hook to convert menu_local_task into variables needed by the
+ * tabs component.
+ */
+function mzdrupal_preprocess_menu_local_tasks(&$variables) {
+  foreach ([ 'primary', 'secondary' ] as $type) {
+    $tabs = [];
+
+    // Sort the tabs by #weight.
+    uasort($variables[$type], [ 'Drupal\Component\Utility\SortArray', 'sortByWeightProperty' ]);
+
+    foreach (array_keys($variables[$type]) as $key) {
+      // Add the tab to a new array.
+      $tabs[$key] = [
+        'active' => $variables[$type][$key]['#active'],
+        'url' => $variables[$type][$key]['#link']['url']->toString(),
+        'text' => \Drupal\Component\Utility\Html::escape($variables[$type][$key]['#link']['title'])
+      ];
+
+      // Check if the tab should be shown by rendering the original.
+      $link = drupal_render($variables[$type][$key]);
+      if (!$link) {
+        unset($tabs[$key]);
+      }
+    }
+
+    // Overwrite the original tabs data.
+    $variables[$type] = $tabs;
+  }
+}
+
+/**
+ * Override or insert variables into the comment templates.
+ *
+ * @param array $variables
+ *   Variables to pass to the theme template.
+ * @param string $hook
+ *   The name of the template being rendered ("comment" in this case.)
+ */
+function mzdrupal_preprocess_comment(&$variables, $hook) {
+  $comment = $variables['elements']['#comment'];
+
+  // We can't have permalinks to unsaved content.
+  $variables['permalink'] = ($comment->id()) ? $comment->permalink() : '';
+}
+
+/**
+ * Override or insert variables into the templates.
+ *
+ * @param array $variables
+ *   Variables to pass to the theme template.
+ * @param string $hook
+ *   The name of the template being rendered
+ */
+function mzdrupal_preprocess_field(&$variables, $hook) {
+  // Make additional variables available to the template.
+  $variables['class_bundle'] = $variables['element']['#bundle'];
+
+  if (isset($variables['element']['#ds_view_mode'])) {
+    $variables['class_view_mode'] = $variables['element']['#ds_view_mode'];
+  }
+  else {
+    $variables['class_view_mode'] = $variables['element']['#view_mode'];
+  }
+}

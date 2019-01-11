@@ -1,0 +1,44 @@
+{
+  "name": "mzdrupal",
+  "author": "Marzee Labs",
+  "description": "The node.js requirements to build this project.",
+  "version": "1.0.0",
+  "repository": {},
+  "devDependencies": {
+    "browser-sync": "^2.12.3",
+    "del": "^3.0.0",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.10.0",
+    "glob": "^7.1.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-eslint": "^5.0.0",
+    "gulp-if": "^2.0.0",
+    "gulp-load-plugins": "^1.2.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-lint": "^1.1.1",
+    "gulp-size": "^3.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "node-sass-magic-importer": "^5.2.0",
+    "patch-package": "^5.1.1",
+    "sass-lint": "^1.7.0",
+    "sass-lint-auto-fix": "^0.15.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "private": true,
+  "scripts": {
+    "prepare": "patch-package",
+    "watch": "gulp watch",
+    "build": "gulp",
+    "lint": "sass-lint -v",
+    "lint:fix": "sass-lint-auto-fix"
+  }
+}

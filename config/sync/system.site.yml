@@ -1,0 +1,14 @@
+uuid: 29628667-6c0d-4348-b9e2-079492029872
+name: 'MZ Drupal'
+mail: luis+mzdrupal@marzeelabs.org
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

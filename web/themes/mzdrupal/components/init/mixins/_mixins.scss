@@ -1,0 +1,28 @@
+$image-url-subdirectory: 'components/header';
+
+@mixin headings-underline($position: '') {
+  position: relative;
+  @if $position == 'center' {
+    text-align: center;
+  }
+
+  &::after {
+    content: '';
+    height: 4px;
+    width: 100%;
+    max-width: 250px;
+    background-color: transparent;
+    background-image: image-url('line-header.svg');
+    background-repeat: repeat-x;
+    position: absolute;
+    display: block;
+    @if $position == 'center' {
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+    }
+    @else {
+      left: 0;
+    }
+    bottom: 100%;
+  }
+}
