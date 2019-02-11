@@ -1,0 +1,6 @@
+services:
+  user_entity:
+    class: Drupal\mzdrupal_frontend\Normalizer\UserEntityNormalizer
+    arguments: ['@entity.manager']
+    tags:
+      - { name: normalizer }

@@ -1,0 +1,8 @@
+name: MZ Drupal Authentication
+type: module
+description: json authenticator using jwt (thanks to https://dropsolid.com/en/blog/drupal-8-and-react-native)
+core: 8.x
+package: MZ Drupal
+dependencies:
+  - jwt
+  - restui

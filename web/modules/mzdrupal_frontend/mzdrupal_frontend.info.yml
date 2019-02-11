@@ -1,0 +1,8 @@
+name: MZ Drupal Frontend
+type: module
+description: Middleware services for serving data to frontend
+package: MZ Drupal
+core: 8.x
+dependencies:
+  - rest
+  - serialization

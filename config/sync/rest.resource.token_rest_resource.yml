@@ -1,0 +1,17 @@
+uuid: 37257eb1-8aaf-4f71-b047-b93f35780169
+langcode: en
+status: false
+dependencies:
+  module:
+    - mzdrupal_auth
+    - serialization
+id: token_rest_resource
+plugin_id: token_rest_resource
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - json_auth

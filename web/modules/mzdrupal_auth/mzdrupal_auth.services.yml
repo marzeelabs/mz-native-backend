@@ -1,0 +1,12 @@
+services:
+  mzdrupal_auth.json_auth:
+    class: Drupal\mzdrupal_auth\Authentication\Provider\JsonAuth
+    arguments: ['@config.factory', '@user.auth', '@flood', '@entity.manager']
+    tags:
+      - { name: authentication_provider, provider_id: 'json_auth', priority: 100 }
+
+  mzdrupal_auth.subscriber:
+    class: Drupal\mzdrupal_auth\EventSubscriber\MZDrupalSubscriber
+    arguments: [ '@current_user' ]
+    tags:
+      - { name: event_subscriber }

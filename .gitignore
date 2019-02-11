@@ -19,3 +19,4 @@ web/sites/*/files
 # Ignore configuration files that may contain sensitive information.
 web/sites/*/settings.local.php
 web/sites/*/drushrc.local.php
+web/sites/*/*.jwt.key

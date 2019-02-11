@@ -1,0 +1,11 @@
+mzdrupal_auth.get_token:
+  path: 'api/token'
+  methods: [POST]
+  defaults:
+    _controller: '\Drupal\mzdrupal_auth\Controller\MZDrupalAuthController::tokenResponse'
+  options:
+    _auth: [ 'json_auth' ]
+  requirements:
+    _content_type_format: json
+    _format: json
+    _user_is_logged_in: 'TRUE'
