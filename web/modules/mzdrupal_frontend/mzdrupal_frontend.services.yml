@@ -1,6 +1,11 @@
 services:
-  user_entity:
+  mzdrupal_frontend.user_entity:
     class: Drupal\mzdrupal_frontend\Normalizer\UserEntityNormalizer
     arguments: ['@entity.manager']
     tags:
       - { name: normalizer }
+
+  mzdrupal_frontend.route_subscriber:
+    class: Drupal\mzdrupal_frontend\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
