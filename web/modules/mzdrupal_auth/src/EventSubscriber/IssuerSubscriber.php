@@ -8,11 +8,11 @@ use Drupal\jwt\Authentication\Event\JwtAuthGenerateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class MZDrupalSubscriber.
+ * Class IssuerSubscriber.
  *
  * @package Drupal\mzdrupal_auth
  */
-class MZDrupalSubscriber implements EventSubscriberInterface {
+class IssuerSubscriber implements EventSubscriberInterface {
 
   /**
    * The current user.

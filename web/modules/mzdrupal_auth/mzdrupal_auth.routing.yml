@@ -2,7 +2,7 @@ mzdrupal_auth.get_token:
   path: 'api/token'
   methods: [POST]
   defaults:
-    _controller: '\Drupal\mzdrupal_auth\Controller\MZDrupalAuthController::tokenResponse'
+    _controller: '\Drupal\mzdrupal_auth\Controller\IssuerController::tokenResponse'
   options:
     _auth: [ 'json_auth' ]
   requirements:

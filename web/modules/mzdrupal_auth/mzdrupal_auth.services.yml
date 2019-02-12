@@ -5,8 +5,14 @@ services:
     tags:
       - { name: authentication_provider, provider_id: 'json_auth', priority: 100 }
 
-  mzdrupal_auth.subscriber:
-    class: Drupal\mzdrupal_auth\EventSubscriber\MZDrupalSubscriber
+  mzdrupal_auth.issuer_subscriber:
+    class: Drupal\mzdrupal_auth\EventSubscriber\IssuerSubscriber
     arguments: [ '@current_user' ]
+    tags:
+      - { name: event_subscriber }
+
+  mzdrupal_auth.consumer_subscriber:
+    class: Drupal\mzdrupal_auth\EventSubscriber\ConsumerSubscriber
+    arguments: [ '@entity.manager' ]
     tags:
       - { name: event_subscriber }

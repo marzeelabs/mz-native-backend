@@ -8,11 +8,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * Class MZDrupalAuthController.
+ * Class IssuerController.
  *
  * @package Drupal\mzdrupal_auth\Controller
  */
-class MZDrupalAuthController extends ControllerBase {
+class IssuerController extends ControllerBase {
 
   /**
    * The JWT Auth Service.
