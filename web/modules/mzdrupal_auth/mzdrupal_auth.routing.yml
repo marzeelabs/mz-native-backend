@@ -1,5 +1,5 @@
 mzdrupal_auth.get_token:
-  path: 'api/token'
+  path: 'jwt/token'
   methods: [POST]
   defaults:
     _controller: '\Drupal\mzdrupal_auth\Controller\IssuerController::tokenResponse'

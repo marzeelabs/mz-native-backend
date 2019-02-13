@@ -1,0 +1,9 @@
+mzdrupal_frontend.profile_info:
+  path: 'profile'
+  defaults:
+    _controller: '\Drupal\mzdrupal_frontend\Controller\UserController::info'
+  options:
+    _auth: [ 'jwt_auth' ]
+  requirements:
+    _format: json
+    _user_is_logged_in: 'TRUE'
